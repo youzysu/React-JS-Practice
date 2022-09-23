@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <div id="root"></div>
+  </body>
+  <script
+    crossorigin
+    src="https://unpkg.com/react@18/umd/react.development.js"
+  ></script>
+  <script
+    crossorigin
+    src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
+  ></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script type="text/babel">
+    function Button({ text, clickValue }) {
+      console.log(text, "is rendered!");
+      return (
+        <button
+          onClick={clickValue}
+          style={{
+            backgroundColor: "tomato",
+            color: "white",
+            border: 0,
+            borderRadius: 10,
+            padding: "30px 60px",
+          }}
+        >
+          {text}
+        </button>
+      );
+    }
+    const MemorizedBtn = React.memo(Button);
+    function App() {
+      const [value, setValue] = React.useState("Value");
+      const changeValue = () => setValue("Value is Changed!");
+      return (
+        <div>
+          <MemorizedBtn text={value} clickValue={changeValue} />
+          <MemorizedBtn text="Confirm" />
+          <MemorizedBtn text="Reset" />
+        </div>
+      );
+    }
+    const root = document.getElementById("root");
+    ReactDOM.render(<App />, root);
+  </script>
+</html>

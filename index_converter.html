@@ -13,8 +13,10 @@
   ></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   <script type="text/babel">
-    const root = document.getElementById("root");
-    function APP() {
+    function DefaultPage() {
+      return <h1>Welcome! Select above option!</h1>;
+    }
+    function MinutesToHours() {
       const [amount, setAmount] = React.useState();
       const [inverted, setInverted] = React.useState(false);
       const onChange = (event) => {
@@ -55,6 +57,67 @@
         </div>
       );
     }
-    ReactDOM.render(<APP />, root);
+    function KilogramToGram() {
+      const [amount, setAmount] = React.useState();
+      const [inverted, setInverted] = React.useState(false);
+      const onChange = (event) => {
+        setAmount(event.target.value);
+      };
+      const reset = () => setAmount(0);
+      const onInvert = () => {
+        reset();
+        setInverted((current) => !current);
+      };
+      return (
+        <div>
+          <div>
+            <h1 className="title">Weight Converter</h1>
+            <label htmlfor="g">grams : </label>
+            <input
+              id="g"
+              type="number"
+              value={inverted ? amount * 1000 : amount}
+              onChange={onChange}
+              disabled={inverted}
+            />
+          </div>
+          <div>
+            <label htmlfor="kg">Kilograms : </label>
+            <input
+              id="g"
+              type="number"
+              value={inverted ? amount : amount / 1000}
+              disabled={!inverted}
+              onChange={onChange}
+            />
+          </div>
+          <button onClick={reset}>Reset</button>
+          <button onClick={onInvert}>
+            {inverted ? "Grams to Kilograms again" : "Kilograms to grams"}
+          </button>
+        </div>
+      );
+    }
+    function App() {
+      const [option, setOption] = React.useState("0");
+      const onChange = (event) => {
+        setOption(event.target.value);
+      };
+      return (
+        <div>
+          <h1>Jisoo Made Converter</h1>
+          <select value={option} onChange={onChange}>
+            <option value="0">Choose category you want to convert</option>
+            <option value="1">Time Converter</option>
+            <option value="2">Weight Converter</option>
+          </select>
+          {option === "0" ? <DefaultPage /> : null}
+          {option === "1" ? <MinutesToHours /> : null}
+          {option === "2" ? <KilogramToGram /> : null}
+        </div>
+      );
+    }
+    const root = document.getElementById("root");
+    ReactDOM.render(<App />, root);
   </script>
 </html>
